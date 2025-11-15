@@ -4,7 +4,6 @@ import prisma from "../configs/prisma.js";
 // Create a client to send and receive events
 export const inngest = new Inngest({
     id: "my-app",
-    signingKey: process.env.INNGEST_SIGNIN_KEY,  // ❗ missing in your code
 });
 
 
