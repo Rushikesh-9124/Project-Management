@@ -59,17 +59,20 @@ const syncWorkSpaceCreation = inngest.createFunction(
   { event: "clerk/organization.created" },
   async ({ event }) => {
     const { data } = event;
+
     await prisma.workspace.create({
-      id: data.id,
-      name: data.name,
-      slug: data.slug,
-      ownerId: data.ownerId,
-      image_url: data.image_url,
+      data: {               
+        id: data.id,
+        name: data.name,
+        slug: data.slug,
+        ownerId: data.created_by,   
+        image_url: data.image_url,
+      }
     });
 
     await prisma.workspaceMember.create({
       data: {
-        userId: data.createdBy,
+        userId: data.created_by,   
         workspaceId: data.id,
         role: "ADMIN",
       },
